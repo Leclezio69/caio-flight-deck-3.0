@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   if (!text) return res.status(400).json({ error: "Narration text is required" });
 
   try {
-    const modelId = process.env.ELEVENLABS_MODEL_ID || "eleven_multilingual_v2";
+    const modelId = (process.env.ELEVENLABS_MODEL_ID || "eleven_multilingual_v2").trim();
     const endpoint = `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(voiceId)}?output_format=mp3_44100_128&optimize_streaming_latency=3`;
     const response = await fetch(endpoint, {
       method: "POST",
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
     if (!response.ok) {
       const detail = await response.text();
       console.error("ElevenLabs error", response.status, detail);
-      return res.status(response.status).json({ error: "ElevenLabs narration failed", status: response.status, detail });
+      return res.status(response.status).json({ error: "ElevenLabs narration failed" });
     }
 
     const audio = Buffer.from(await response.arrayBuffer());
