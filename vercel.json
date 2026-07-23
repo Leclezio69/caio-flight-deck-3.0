@@ -2,6 +2,5 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": { "api/*.js": { "maxDuration": 60 } },
   "cleanUrls": true,
-  "trailingSlash": false,
-  "analytics": { "enabled": true }
+  "trailingSlash": false
 }
