@@ -10,5 +10,10 @@
     "deploy": "npx vercel --prod",
     "verify": "node scripts/verify.mjs"
   },
-  "engines": { "node": ">=22" }
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
 }
