@@ -574,5 +574,9 @@ function renderAll(){applyTheme();renderTop();renderCommand();renderMissionGrid(
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>goTo(b.dataset.view)));document.getElementById('mobileMenu').onclick=()=>{document.getElementById('sidebar').classList.add('open');document.getElementById('overlay').classList.add('open')};document.getElementById('overlay').onclick=()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open')};
 if(state.entered)document.getElementById('launch').classList.add('hidden');applyTheme();goTo(state.lastView||'command');renderAll();
 </script>
+<script type="module">
+  import { inject } from '@vercel/analytics';
+  inject();
+</script>
 </body>
 </html>
