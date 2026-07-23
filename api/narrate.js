@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
   try {
     const modelId = process.env.ELEVENLABS_MODEL_ID || "eleven_multilingual_v2";
-    const endpoint = `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(voiceId)}/stream?output_format=mp3_22050_32&optimize_streaming_latency=3`;
+    const endpoint = `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(voiceId)}?output_format=mp3_44100_128&optimize_streaming_latency=3`;
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
