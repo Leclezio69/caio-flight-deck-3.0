@@ -17,16 +17,17 @@ function outputText(payload) {
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
-  if (!process.env.OPENAI_API_KEY) return res.status(503).json({ error: "OPENAI_API_KEY is not configured" });
+  const apiKey = (process.env.OPENAI_API_KEY || "").trim();
+  if (!apiKey) return res.status(503).json({ error: "OPENAI_API_KEY is not configured" });
   try {
     const question = String(req.body?.question || "").slice(0, 4000);
     const snapshot = JSON.stringify(req.body?.snapshot || {}).slice(0, 70000);
     if (!question.trim()) return res.status(400).json({ error: "Question is required" });
     const response = await fetch("https://api.openai.com/v1/responses", {
       method: "POST",
-      headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}`, "Content-Type": "application/json" },
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || "gpt-5",
+        model: (process.env.OPENAI_MODEL || "gpt-5").trim(),
         instructions: INSTRUCTIONS,
         input: `STRATEGIC QUESTION:\n${question}\n\nENTERPRISE STATE:\n${snapshot}`,
       }),

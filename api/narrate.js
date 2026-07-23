@@ -6,8 +6,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const apiKey = process.env.ELEVENLABS_API_KEY;
-  const voiceId = process.env.ELEVENLABS_VOICE_ID;
+  const apiKey = (process.env.ELEVENLABS_API_KEY || "").trim();
+  const voiceId = (process.env.ELEVENLABS_VOICE_ID || "").trim();
   if (!apiKey || !voiceId) {
     return res.status(503).json({ error: "ElevenLabs voice is not configured" });
   }

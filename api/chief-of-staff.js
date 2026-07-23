@@ -51,7 +51,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = (process.env.OPENAI_API_KEY || "").trim();
   if (!apiKey) return res.status(503).json({ error: "OPENAI_API_KEY is not configured" });
 
   try {
@@ -59,7 +59,7 @@ export default async function handler(req, res) {
     const snapshot = compactSnapshot(req.body?.snapshot);
     const message = String(req.body?.message || "").slice(0, 6000);
     const history = cleanHistory(req.body?.history);
-    const model = process.env.OPENAI_MODEL || "gpt-5";
+    const model = (process.env.OPENAI_MODEL || "gpt-5").trim();
 
     const input = mode === "debrief"
       ? `Create a rigorous end-of-campaign executive debrief from this command record. Do not invent events, motives, or scores. Identify the strongest evidence and the most dangerous pattern.\n\nCOMMAND RECORD JSON:\n${snapshot}`
